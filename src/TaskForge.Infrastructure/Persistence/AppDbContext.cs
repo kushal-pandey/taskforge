@@ -23,12 +23,14 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<BoardColumn> BoardColumns => Set<BoardColumn>();
     public DbSet<TaskItem> Tasks => Set<TaskItem>();
     public DbSet<Comment> Comments => Set<Comment>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
         builder.Entity<TenantUser>().HasKey(tu => new { tu.TenantId, tu.UserId });
+        builder.Entity<RefreshToken>().HasIndex(rt => rt.Token).IsUnique();
 
         builder.Entity<Project>().HasQueryFilter(p => p.TenantId == _tenantProvider.TenantId);
         builder.Entity<Board>().HasQueryFilter(b => b.TenantId == _tenantProvider.TenantId);
