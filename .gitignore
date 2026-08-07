@@ -1,0 +1,50 @@
+# Build results
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+out/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# VS Code (keep shared settings, ignore personal ones)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# EF Core
+*.mdf
+*.ldf
+
+# Node / React (for the client folder, coming later)
+node_modules/
+client/dist/
+client/.env
+client/.env.local
+
+# Environment / secrets
+appsettings.Development.json
+appsettings.Local.json
+*.env
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
