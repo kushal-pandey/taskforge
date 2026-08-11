@@ -11,6 +11,7 @@ using TaskForge.Application.Common.Interfaces;
 using TaskForge.Infrastructure.Identity;
 using TaskForge.Infrastructure.Multitenancy;
 using TaskForge.Infrastructure.Persistence;
+using TaskForge.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,6 +65,8 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
         };
     });
+
+builder.Services.AddScoped<IProjectService, ProjectService>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
