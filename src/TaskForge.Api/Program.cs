@@ -98,15 +98,15 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseHttpsRedirection();
+
 app.UseCors("AllowFrontend");
+
 app.UseAuthentication();
+
 app.UseMiddleware<TenantResolutionMiddleware>();
+
 app.UseAuthorization();
-app.MapControllers();
-app.UseAuthentication();
-app.UseMiddleware<TenantResolutionMiddleware>();
-app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

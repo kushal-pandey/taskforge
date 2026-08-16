@@ -21,16 +21,6 @@ public class ProjectService : IProjectService
 
     public async Task<ProjectResponse> CreateAsync(CreateProjectRequest request)
     {
-        if (_tenantProvider.TenantId == Guid.Empty)
-            throw new UnauthorizedAccessException("Tenant not found.");
-
-        var exists = await _db.Projects.AnyAsync(x =>
-            x.TenantId == _tenantProvider.TenantId &&
-            x.Name == request.Name);
-
-        if (exists)
-            throw new InvalidOperationException("A project with this name already exists.");
-
         var project = new Project
         {
             TenantId = _tenantProvider.TenantId,
@@ -48,5 +38,33 @@ public class ProjectService : IProjectService
             project.Description,
             project.CreatedAt
         );
+    }
+
+    public async Task<List<ProjectResponse>> GetAllAsync()
+    {
+        return await _db.Projects
+            .AsNoTracking()
+            .OrderByDescending(p => p.CreatedAt)
+            .Select(p => new ProjectResponse(
+                p.Id,
+                p.Name,
+                p.Description,
+                p.CreatedAt
+            ))
+            .ToListAsync();
+    }
+
+    public async Task<ProjectResponse?> GetByIdAsync(Guid id)
+    {
+        return await _db.Projects
+            .AsNoTracking()
+            .Where(p => p.Id == id)
+            .Select(p => new ProjectResponse(
+                p.Id,
+                p.Name,
+                p.Description,
+                p.CreatedAt
+            ))
+            .FirstOrDefaultAsync();
     }
 }
