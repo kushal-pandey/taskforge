@@ -67,4 +67,28 @@ public class ProjectService : IProjectService
             ))
             .FirstOrDefaultAsync();
     }
+
+    public async Task<ProjectResponse?> UpdateAsync(Guid id, UpdateProjectRequest request)
+    {
+        var project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == id);
+        if (project is null) return null;
+
+        project.Name = request.Name;
+        project.Description = request.Description;
+        project.UpdatedAt = DateTime.UtcNow;
+
+        await _db.SaveChangesAsync();
+
+        return new ProjectResponse(project.Id, project.Name, project.Description, project.CreatedAt);
+    }
+
+    public async Task<bool> DeleteAsync(Guid id)
+    {
+        var project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == id);
+        if (project is null) return false;
+
+        _db.Projects.Remove(project);
+        await _db.SaveChangesAsync();
+        return true;
+    }
 }
