@@ -12,6 +12,7 @@ using TaskForge.Infrastructure.Identity;
 using TaskForge.Infrastructure.Multitenancy;
 using TaskForge.Infrastructure.Persistence;
 using TaskForge.Infrastructure.Services;
+using TaskForge.Application.Features.Boards;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +68,7 @@ builder.Services.AddAuthentication(options =>
     });
 
 builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IBoardService, BoardService>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
