@@ -69,6 +69,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IBoardService, BoardService>();
+builder.Services.AddScoped<IColumnService, ColumnService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
